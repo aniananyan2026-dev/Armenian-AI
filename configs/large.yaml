@@ -1,0 +1,43 @@
+# Large model configuration - for full-scale training
+
+model:
+  name: "gpt2-large"
+  hidden_size: 1024
+  num_attention_heads: 16
+  num_layers: 24
+  intermediate_size: 4096
+  max_position_embeddings: 2048
+  vocab_size: 50000
+  dropout: 0.1
+
+training:
+  num_epochs: 5
+  batch_size: 64
+  learning_rate: 3e-4
+  warmup_steps: 5000
+  weight_decay: 0.01
+  gradient_accumulation_steps: 4
+  use_8bit_adam: true
+
+data:
+  train_path: "data/processed/train.txt"
+  val_path: "data/processed/val.txt"
+  test_path: "data/processed/test.txt"
+  max_seq_length: 2048
+  num_workers: 8
+
+optimization:
+  optimizer: "adamw_8bit"
+  scheduler: "cosine_with_restarts"
+  mixed_precision: "fp16"
+  use_gradient_checkpointing: true
+
+logging:
+  log_interval: 100
+  eval_interval: 1000
+  save_steps: 1000
+  output_dir: "models/large"
+
+device:
+  use_gpu: true
+  num_gpus: 4
