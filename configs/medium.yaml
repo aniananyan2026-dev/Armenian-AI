@@ -1,0 +1,42 @@
+# Medium model configuration - for experimentation
+
+model:
+  name: "gpt2-medium"
+  hidden_size: 768
+  num_attention_heads: 12
+  num_layers: 12
+  intermediate_size: 3072
+  max_position_embeddings: 1024
+  vocab_size: 50000
+  dropout: 0.1
+
+training:
+  num_epochs: 3
+  batch_size: 32
+  learning_rate: 5e-4
+  warmup_steps: 1000
+  weight_decay: 0.01
+  gradient_accumulation_steps: 2
+
+data:
+  train_path: "data/processed/train.txt"
+  val_path: "data/processed/val.txt"
+  test_path: "data/processed/test.txt"
+  max_seq_length: 1024
+  num_workers: 4
+
+optimization:
+  optimizer: "adamw"
+  scheduler: "cosine"
+  mixed_precision: "fp16"
+  use_gradient_checkpointing: true
+
+logging:
+  log_interval: 50
+  eval_interval: 500
+  save_steps: 500
+  output_dir: "models/medium"
+
+device:
+  use_gpu: true
+  num_gpus: 2
